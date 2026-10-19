@@ -1,0 +1,1 @@
+# makine-ogrenmesine-giris-proje
