@@ -1,0 +1,476 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PersonaFit Veri Rehberi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Düzen: tek sütun rehber. Üstte özet akış, ortada zihin haritası, altta bakılıp geçilecek tablolar. */
+:root{
+  --bg:#F4F6F9; --card:#FFFFFF; --fg:#13202C; --muted:#566676; --line:#D8DFE7; --code:#0F1B26; --codefg:#DCE6EF;
+  --c-veri:#1F6FB2;   --c-veri-bg:#E4EFF9;
+  --c-tablo:#0E7C74;  --c-tablo-bg:#DDF2EF;
+  --c-tahmin:#B25E09; --c-tahmin-bg:#FBEBD5;
+  --c-sim:#6B4FBB;    --c-sim-bg:#ECE7FA;
+  --c-rl:#2B7D2F;     --c-rl-bg:#E1F3E1;
+  --c-guv:#B3261E;    --c-guv-bg:#FBE4E1;
+  --c-ui:#4A5968;     --c-ui-bg:#E6EAEF;
+  --f-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-body:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E151C; --card:#16202A; --fg:#E6EDF4; --muted:#9AABBB; --line:#2A3846; --code:#0A1118; --codefg:#D3DFEA;
+  --c-veri:#6DB2EE;   --c-veri-bg:#17293A;
+  --c-tablo:#52C9BE;  --c-tablo-bg:#12302E;
+  --c-tahmin:#F0A24D; --c-tahmin-bg:#3A2A14;
+  --c-sim:#B5A0F2;    --c-sim-bg:#2A2342;
+  --c-rl:#7FD184;     --c-rl-bg:#173020;
+  --c-guv:#F08A83;    --c-guv-bg:#3C1B19;
+  --c-ui:#AEBCCB;     --c-ui-bg:#243140;
+  color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0E151C; --card:#16202A; --fg:#E6EDF4; --muted:#9AABBB; --line:#2A3846; --code:#0A1118; --codefg:#D3DFEA;
+  --c-veri:#6DB2EE;   --c-veri-bg:#17293A;
+  --c-tablo:#52C9BE;  --c-tablo-bg:#12302E;
+  --c-tahmin:#F0A24D; --c-tahmin-bg:#3A2A14;
+  --c-sim:#B5A0F2;    --c-sim-bg:#2A2342;
+  --c-rl:#7FD184;     --c-rl-bg:#173020;
+  --c-guv:#F08A83;    --c-guv-bg:#3C1B19;
+  --c-ui:#AEBCCB;     --c-ui-bg:#243140;
+  color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6;
+  padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5vw,44px);letter-spacing:-.01em}
+h2{font-size:clamp(22px,3.2vw,28px);letter-spacing:-.005em}
+h3{font-size:18px}
+p{margin:0}
+.lead{color:var(--muted);max-width:68ch;font-size:17px}
+.sec{display:flex;flex-direction:column;gap:16px;min-width:0}
+.sec>.lead{margin-top:-4px}
+.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+code{background:var(--c-ui-bg);padding:1px 6px;border-radius:4px;word-break:break-word}
+
+/* Akış */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;position:relative;min-width:0}
+.step b{display:block;font-size:14px;margin-bottom:2px}
+.step span{font-size:13px;color:var(--muted);display:block}
+.step .tag{font-family:var(--f-mono);font-size:11px;margin-top:6px;color:var(--fg)}
+.step::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;border-radius:8px 8px 0 0;background:var(--k)}
+.k-veri{--k:var(--c-veri)}.k-tablo{--k:var(--c-tablo)}.k-tahmin{--k:var(--c-tahmin)}.k-sim{--k:var(--c-sim)}.k-rl{--k:var(--c-rl)}.k-guv{--k:var(--c-guv)}.k-ui{--k:var(--c-ui)}
+
+/* Zihin haritası */
+.map{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px 16px;display:flex;flex-direction:column;align-items:center;gap:0}
+.root{background:var(--fg);color:var(--bg);font-family:var(--f-display);font-weight:700;font-size:20px;padding:10px 22px;border-radius:999px;text-align:center}
+.stem{width:2px;height:22px;background:var(--line)}
+.branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;width:100%;border-top:2px solid var(--line);padding-top:22px;margin-top:0;position:relative}
+.br{min-width:0;display:flex;flex-direction:column;gap:8px}
+.bh{background:var(--bg-k);color:var(--k);border:2px solid var(--k);border-radius:10px;padding:8px 12px;font-family:var(--f-display);font-weight:700;font-size:16px;line-height:1.25}
+.bh small{display:block;font-family:var(--f-body);font-weight:500;font-size:12px;color:var(--fg);opacity:.8;margin-top:2px}
+.br ul{list-style:none;margin:0;padding:0 0 0 14px;border-left:2px solid var(--k);display:flex;flex-direction:column;gap:6px}
+.br li{font-size:14px;line-height:1.45;position:relative;padding-left:12px;min-width:0}
+.br li::before{content:"";position:absolute;left:-14px;top:.75em;width:12px;border-top:2px solid var(--k)}
+.br li b{color:var(--k);font-weight:600}
+.br li ul{margin-top:5px;padding-left:12px;border-left:1px dashed var(--k)}
+.br li li{font-size:13px;color:var(--muted)}
+.br li li::before{width:9px;left:-12px;border-top:1px dashed var(--k)}
+.br.k-veri{--bg-k:var(--c-veri-bg)}.br.k-tablo{--bg-k:var(--c-tablo-bg)}.br.k-tahmin{--bg-k:var(--c-tahmin-bg)}.br.k-sim{--bg-k:var(--c-sim-bg)}.br.k-rl{--bg-k:var(--c-rl-bg)}.br.k-guv{--bg-k:var(--c-guv-bg)}.br.k-ui{--bg-k:var(--c-ui-bg)}
+
+/* Tablolar */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:640px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--bg);position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--p-bg);color:var(--p);white-space:nowrap}
+.p-veri{--p:var(--c-veri);--p-bg:var(--c-veri-bg)}.p-tahmin{--p:var(--c-tahmin);--p-bg:var(--c-tahmin-bg)}.p-sim{--p:var(--c-sim);--p-bg:var(--c-sim-bg)}.p-rl{--p:var(--c-rl);--p-bg:var(--c-rl-bg)}.p-guv{--p:var(--c-guv);--p-bg:var(--c-guv-bg)}.p-ui{--p:var(--c-ui);--p-bg:var(--c-ui-bg)}
+.dot{font-weight:700;color:var(--c-rl)}
+.dim{color:var(--muted)}
+
+/* Kartlar */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.kv{display:grid;grid-template-columns:84px 1fr;gap:4px 10px;font-size:14px}
+.kv dt{color:var(--muted);font-weight:600;font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding-top:2px}
+.kv dd{margin:0;min-width:0}
+.say{font-size:15px}
+
+/* Kod */
+pre{background:var(--code);color:var(--codefg);border-radius:10px;padding:16px;overflow-x:auto;font-family:var(--f-mono);font-size:13px;line-height:1.55;margin:0}
+.c{color:#7F93A6}
+
+/* Uyarılar */
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.w{border:1px solid var(--line);border-left:4px solid var(--c-guv);background:var(--card);border-radius:8px;padding:12px 14px;font-size:14px;min-width:0}
+.w b{display:block;margin-bottom:2px}
+.ok{border-left-color:var(--c-rl)}
+.tree{font-family:var(--f-mono);font-size:13px;line-height:1.6;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;overflow-x:auto;white-space:pre;margin:0}
+.tree .d{color:var(--muted)}
+@media (max-width:520px){.kv{grid-template-columns:1fr}.kv dt{padding-top:6px}}
+</style>
+
+<div class="wrap">
+
+<header class="sec">
+  <span class="label">Makine Öğrenmesine Giriş Projesi</span>
+  <h1>PersonaFit Veri Rehberi</h1>
+  <p class="lead">PMData klasörlerinde hangi dosya var, ne ölçüyor, hangi algoritmada hangi amaçla kullanılacak. Örnek zip yalnızca p01 içeriyor. p02–p16 aynı yapıda olacağı için bu rehber hepsi için geçerli.</p>
+</header>
+
+<section class="sec">
+  <h2>Büyük resim</h2>
+  <p class="lead">Proje sırayla beş iş yapıyor. Her kutu bir öncekinin çıktısını alır.</p>
+  <div class="flow">
+    <div class="step k-veri"><b>1. Ham veri</b><span>Saat, anket, yemek kaydı</span><span class="tag">fitbit / pmsys / googledocs</span></div>
+    <div class="step k-tablo"><b>2. Günlük tablo</b><span>Her şey "kişi + gün" satırına çevrilir</span><span class="tag">pandas</span></div>
+    <div class="step k-tahmin"><b>3. Yorgunluk tahmini</b><span>Bugün ne kadar yorgunum?</span><span class="tag">Random Forest, Ridge</span></div>
+    <div class="step k-sim"><b>4. Simülatör</b><span>60 günlük sanal kullanıcı</span><span class="tag">Gymnasium</span></div>
+    <div class="step k-rl"><b>5. Öneri ajanı</b><span>Hangi gün hangi egzersiz?</span><span class="tag">Q-Learning, DQN</span></div>
+    <div class="step k-guv"><b>6. Güvenlik filtresi</b><span>Riskli öneriyi engeller</span><span class="tag">kural tabanlı</span></div>
+    <div class="step k-ui"><b>7. Arayüz</b><span>Sonuçları gösterir</span><span class="tag">Streamlit</span></div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Zihin haritası</h2>
+  <p class="lead">Ortadan dallara doğru oku. Her dalın rengi, bu sayfanın geri kalanında da aynı bölümü gösterir.</p>
+  <div class="map">
+    <div class="root">PersonaFit verisi</div>
+    <div class="stem"></div>
+    <div class="branches">
+
+      <div class="br k-veri">
+        <div class="bh">Veri kaynakları<small>Her kişi için bir klasör: p01 … p16</small></div>
+        <ul>
+          <li><b>fitbit/</b> saatten gelen ölçümler
+            <ul><li>dakikalık: adım, kalori, mesafe, nabız</li><li>günlük: aktif dakikalar, dinlenik nabız</li><li>uyku: oturum ve puan</li><li>exercise.json: yürüyüş, koşu kayıtları</li></ul></li>
+          <li><b>pmsys/</b> kişinin kendi bildirdikleri
+            <ul><li>wellness.csv: yorgunluk, ruh hali, hazır olma</li><li>srpe.csv: yaptığı antrenman ve zorluğu</li><li>injury.csv: sakatlık var mı</li></ul></li>
+          <li><b>googledocs/reporting.csv</b> öğün, su, alkol</li>
+          <li><b>food-images/</b> yemek fotoğrafları. Projede yok, atlanır.</li>
+          <li><b>participant-overview.xlsx</b> 16 kişinin yaşı, boyu, cinsiyeti</li>
+        </ul>
+      </div>
+
+      <div class="br k-tablo">
+        <div class="bh">Günlük tablo<small>Tüm algoritmalar bu tabloyu okur</small></div>
+        <ul>
+          <li><b>Satır</b> bir kişinin bir günü (p01: 152 gün)</li>
+          <li><b>Dakikalığı güne topla</b>
+            <ul><li>adım, kalori: günlük toplam</li><li>nabız: günlük ortalama</li></ul></li>
+          <li><b>Geçmiş sütunları</b>
+            <ul><li>dünkü adım, kalori, yük</li><li>son 7 günün ortalaması</li></ul></li>
+          <li><b>Eksik girdiler</b> (uyku puanı gibi) doldurulur. Doldurma kuralı yalnızca eğitim kişilerinden öğrenilir.</li>
+          <li><b>Eksik yorgunluk</b> (hedef) doldurulmaz. O gün eğitimden çıkarılır.</li>
+        </ul>
+      </div>
+
+      <div class="br k-tahmin">
+        <div class="bh">Yorgunluk tahmini<small>Random Forest + Ridge · cevabı bilinen veriyle öğrenme</small></div>
+        <ul>
+          <li><b>Cevap (hedef):</b> wellness.csv içindeki <code>fatigue</code></li>
+          <li><b>Girdiler:</b>
+            <ul><li>dünkü ve son 7 gün adım, kalori, yük</li><li>son gecenin uyku puanı</li><li>sabah dinlenik nabız</li></ul></li>
+          <li><b>Bölme:</b> kişiye göre. 16 kişide 12 eğitim, 2 doğrulama, 2 test</li>
+          <li><b>Başarı ölçüsü:</b> MAE, RMSE, R²</li>
+        </ul>
+      </div>
+
+      <div class="br k-sim">
+        <div class="bh">Simülatör<small>Gymnasium · gerçek veriden ayarlanan sanal dünya</small></div>
+        <ul>
+          <li><b>Ayar için kullanılan veri:</b> yalnızca eğitim kişileri
+            <ul><li>uyku, adım, nabız dağılımları</li><li>yorgunluk ortalaması ve yayılımı</li><li>egzersiz süresi ve zorluğu (srpe, exercise)</li></ul></li>
+          <li><b>Sanal kullanıcı:</b> kondisyon, yorgunluk, motivasyon, toparlanma</li>
+          <li><b>3 profil</b> üzerinde 60 gün</li>
+          <li><b>Not:</b> simülatör bir makine öğrenmesi modeli değil, el yazımı kurallar</li>
+        </ul>
+      </div>
+
+      <div class="br k-rl">
+        <div class="bh">Egzersiz önerisi<small>Q-Learning + DQN · deneme yanılmayla öğrenme</small></div>
+        <ul>
+          <li><b>Durum:</b> tahmini yorgunluk, uyku, nabız, geçmiş yük, kondisyon</li>
+          <li><b>Aksiyon:</b> dinlenme, yürüyüş, bisiklet, koşu × hafif, orta, yoğun</li>
+          <li><b>Ödül:</b> kondisyon artarsa artı, aşırı yorgunluk ve riskli seçim ceza</li>
+          <li><b>Rakipler:</b> rastgele ve kural tabanlı öneri</li>
+        </ul>
+      </div>
+
+      <div class="br k-guv">
+        <div class="bh">Güvenlik filtresi<small>Kural tabanlı · öğrenme yok</small></div>
+        <ul>
+          <li>Ajanın seçimi kullanıcıya gitmeden buradan geçer</li>
+          <li><b>Örnek kurallar</b> (eşikleri sen seçeceksin):
+            <ul><li>yorgunluk yüksekse yoğun egzersiz yok</li><li>injury.csv'de sakatlık varsa koşu yok</li><li>uyku çok kısaysa hafife indir</li></ul></li>
+          <li><b>Deney:</b> filtreli ve filtresiz karşılaştırma</li>
+        </ul>
+      </div>
+
+      <div class="br k-ui">
+        <div class="bh">Arayüz<small>Streamlit + Matplotlib</small></div>
+        <ul>
+          <li>Ana panel: günün özeti ve öneri</li>
+          <li>Kullanıcı analizi: son 7 gün</li>
+          <li>60 günlük simülasyon grafiği</li>
+          <li>Model karşılaştırması</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Hangi veri hangi algoritmada?</h2>
+  <p class="lead">● = o algoritmada kullanılır. Boş = kullanılmaz.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Veri</th><th>Yorgunluk tahmini</th><th>Simülatör ayarı</th><th>Q-Learning / DQN</th><th>Güvenlik filtresi</th><th>Nasıl kullanılır</th></tr></thead>
+    <tbody>
+      <tr><td><code>wellness.fatigue</code></td><td><span class="dot">●</span> hedef</td><td><span class="dot">●</span></td><td></td><td></td><td>Tahmin edilecek cevap. Simülatörde yorgunluğun gerçekçi aralığını verir.</td></tr>
+      <tr><td><code>wellness</code> diğer sütunlar</td><td><span class="dim">dünkü değer</span></td><td><span class="dot">●</span></td><td></td><td></td><td>Aynı günün readiness, mood, soreness değerleri girdi yapılmaz. Yorgunlukla aynı anda doldurulduğu için cevabı ele verir.</td></tr>
+      <tr><td><code>steps</code>, <code>calories</code></td><td><span class="dot">●</span> dünkü ve 7 gün</td><td><span class="dot">●</span></td><td></td><td></td><td>Dakikalık değerler güne toplanır.</td></tr>
+      <tr><td><code>heart_rate</code></td><td><span class="dot">●</span> önceki günlerin ort.</td><td><span class="dot">●</span></td><td></td><td></td><td>Günlük ortalama ve en yüksek değer.</td></tr>
+      <tr><td><code>resting_heart_rate</code> / <code>sleep_score</code></td><td><span class="dot">●</span> sabah değeri</td><td><span class="dot">●</span></td><td><span class="dot">●</span> durum</td><td><span class="dot">●</span> sapma</td><td>Kişinin normalinden yüksekse yorgunluk işareti.</td></tr>
+      <tr><td><code>sleep.json</code></td><td><span class="dot">●</span> uyku süresi</td><td><span class="dot">●</span></td><td></td><td><span class="dot">●</span></td><td>Süre ve evreler (derin, hafif, REM).</td></tr>
+      <tr><td><code>very_active_minutes</code></td><td><span class="dot">●</span> dünkü</td><td><span class="dot">●</span></td><td></td><td></td><td>Günlük hareket yoğunluğu.</td></tr>
+      <tr><td><code>moderately / lightly / sedentary</code> dakikaları, <code>time_in_heart_rate_zones</code></td><td><span class="dot">●</span> dünkü <span class="dim">(aday)</span></td><td><span class="dot">●</span></td><td></td><td></td><td>Ablation deneyiyle eklenip eklenmeyeceğine karar verilir.</td></tr>
+      <tr><td><code>srpe.csv</code></td><td><span class="dot">●</span> dünkü yük</td><td><span class="dot">●</span> etki</td><td></td><td></td><td>Yük = zorluk (0-10) × dakika. Egzersizin yorgunluğa etkisini ayarlamak için de kullanılır.</td></tr>
+      <tr><td><code>exercise.json</code></td><td></td><td><span class="dot">●</span></td><td></td><td></td><td>Walk, Run, Sport, Treadmill için süre, kalori, nabız. Aksiyon türlerini ve etkilerini ayarlar.</td></tr>
+      <tr><td><code>injury.csv</code></td><td></td><td></td><td></td><td><span class="dot">●</span></td><td>Sakatlık varsa ilgili egzersiz yasak.</td></tr>
+      <tr><td><code>reporting.csv</code>, <code>food-images</code></td><td></td><td></td><td></td><td></td><td>Proje belgesinde geçmiyor, çıkar.</td></tr>
+      <tr><td><code>participant-overview.xlsx</code></td><td></td><td><span class="dot">●</span> profil</td><td></td><td></td><td>Yaş, boy, cinsiyet, maksimum nabız. 3 kullanıcı profilini tanımlamak için kullanılabilir.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="sec">
+  <h2>Çıkarılanlar ve aday dosyalar</h2>
+  <p class="lead">İlk iki dosya proje belgesinde hiç geçmiyor, çıkar. Alttaki dört dosya belgede açıkça geçmiyor ama işe yarayabilir. Hepsini günlük tabloya ekle, sonra doğrulama kişilerinde hata düşüyor mu bakarak tutup tutmayacağına karar ver.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Dosya</th><th>Karar</th><th>Neden</th></tr></thead>
+    <tbody>
+      <tr><td><code>food-images/</code></td><td><span class="pill p-guv">çıkar</span></td><td>Belgede yok. Fotoğraf verisi. Kullanmak için görüntü işleme modeli gerekir, projede böyle bir bileşen yok. Fotoğrafların yorgunluk gibi bir etiketi de yok. Sadece 26 tane.</td></tr>
+      <tr><td><code>googledocs/reporting.csv</code></td><td><span class="pill p-guv">çıkar</span></td><td>Belgede yok. Öğün, su, alkol bilgisi. Proje beslenmeyi kapsamıyor, belge bunu zayıf yan olarak yazıyor. Sadece 109 satır var ve 152 günün hepsini kapsamıyor. Kilo sütunu ilk satırlarda hep aynı değerde.</td></tr>
+      <tr><td><code>fitbit/distance.json</code></td><td><span class="pill p-ui">düşük öncelik</span></td><td>Mesafe ile adım sayısı neredeyse aynı bilgiyi taşır. İstersen ekle, yeni bir şey katması beklenmez.</td></tr>
+      <tr><td><code>sedentary_minutes.json</code>, <code>lightly_active_minutes.json</code>, <code>moderately_active_minutes.json</code></td><td><span class="pill p-tahmin">aday özellik</span></td><td>Tut. Sadece <code>very_active_minutes</code> kullanırsan hafif yürüyüş ile orta tempolu bisiklet ikisi de "0 yoğun dakika" görünür. Proje farklı yoğunlukta egzersiz önerdiği için dört yoğunluğu ayrı tut. Günün dakikaları bu dört yoğunluk arasında paylaşıldığı için birbirine bağlılar. Ridge katsayılarını yorumlarken bunu hesaba kat, gerekirse birini çıkar. Random Forest için sorun değil.</td></tr>
+      <tr><td><code>time_in_heart_rate_zones.json</code></td><td><span class="pill p-tahmin">aday özellik</span></td><td>Tut. Egzersiz yoğunluğunu ve simülatör ayarını incelerken işe yarayabilir. Bölge sınırları Fitbit'in genel varsayılanı, kişiye özel değil. Yalnızca önceki günlerin değerini kullan.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="dim" style="font-size:14px">Belgedeki "Fitbit Fitness Tracker Data" bu zip'teki <code>fitbit/</code> klasörü değil. O ayrı bir veri seti, yalnızca yardımcı olarak anılıyor ve zip'te yok.</p>
+</section>
+
+<section class="sec">
+  <h2>Algoritmalar düz dille</h2>
+  <div class="cards">
+    <div class="card"><h3>Random Forest <span class="pill p-tahmin">yorgunluk</span></h3>
+      <p class="say">Yüzlerce küçük karar ağacı ayrı ayrı tahmin yapar, sonuç ortalaması alınır. Ağaç şöyle sorar: "Dün 12 bin adımdan fazla attı mı? Uyku puanı 70'in altında mı?"</p>
+      <dl class="kv"><dt>Girdi</dt><dd>Günlük tablonun sütunları</dd><dt>Çıktı</dt><dd>Bir sayı: tahmini yorgunluk</dd><dt>Dikkat</dt><dd>Ölçekleme gerekmez. Eksik değeri doldurmak gerekir.</dd></dl></div>
+    <div class="card"><h3>Ridge Regression <span class="pill p-tahmin">yorgunluk</span></h3>
+      <p class="say">Her girdiye bir ağırlık verip topluyor. Ağırlıkları küçük tutuyor, böylece eğitim verisini ezberlemiyor. Basit olduğu için Random Forest'ın karşısında ölçü çubuğu görevi görür.</p>
+      <dl class="kv"><dt>Girdi</dt><dd>Aynı tablo</dd><dt>Çıktı</dt><dd>Aynı sayı</dd><dt>Dikkat</dt><dd>Önce ölçekleme gerekir. Ölçeği yalnızca eğitim kişilerinden öğren.</dd></dl></div>
+    <div class="card"><h3>Q-Learning <span class="pill p-rl">öneri</span></h3>
+      <p class="say">Bir puan tablosu. Satırlar durumlar (örnek: yorgunluk yüksek, uyku iyi), sütunlar egzersizler. Hücredeki sayı "bu durumda bunu yaparsam ileride ne kadar ödül alırım" demek. Ajan günlerce dener, tabloyu günceller.</p>
+      <dl class="kv"><dt>Girdi</dt><dd>Durum. Sayılar gruplara bölünür: düşük, orta, yüksek</dd><dt>Çıktı</dt><dd>Seçilen egzersiz</dd><dt>Dikkat</dt><dd>Durum sayısı çok artarsa tablo büyür. Grup sayısını küçük tut.</dd></dl></div>
+    <div class="card"><h3>DQN <span class="pill p-rl">öneri</span></h3>
+      <p class="say">Q-Learning'in tablo yerine küçük sinir ağı kullanan hâli. Durumu sayı listesi olarak alır, her egzersiz için bir puan üretir. Gruplara bölmeden gerçek sayılarla çalışır.</p>
+      <dl class="kv"><dt>Girdi</dt><dd>Durum vektörü (ölçeklenmiş)</dd><dt>Çıktı</dt><dd>Her aksiyon için puan, en yükseği seçilir</dd><dt>Dikkat</dt><dd>PyTorch ile yazılır. Eğitimi yavaştır, ayarı hassastır.</dd></dl></div>
+    <div class="card"><h3>Rastgele ve kural tabanlı <span class="pill p-ui">rakip</span></h3>
+      <p class="say">Rastgele: her gün zar atar. Kural tabanlı: "yorgunsa dinlen, değilse yürü" gibi sabit kurallar. Q-Learning ve DQN'in bunlardan iyi olduğunu göstermen gerekir.</p>
+      <dl class="kv"><dt>Veri</dt><dd>Aynı simülatör, aynı senaryolar</dd></dl></div>
+    <div class="card"><h3>Güvenlik filtresi <span class="pill p-guv">kural</span></h3>
+      <p class="say">Öğrenme yok. Ajan "yoğun koşu" seçse bile yorgunluk yüksekse bunu "hafif yürüyüş" veya "dinlenme" yapar. Filtreli ve filtresiz deneyleri karşılaştırarak etkisini ölçersin.</p>
+      <dl class="kv"><dt>Veri</dt><dd>Tahmini yorgunluk, sakatlık, uyku</dd></dl></div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Klasör yapısı</h2>
+  <pre class="tree">PMData/
+├─ participant-overview.xlsx   <span class="d">16 kişi, 1 satır = 1 kişi</span>
+├─ p01/ … p16/                 <span class="d">her kişi aynı yapıda</span>
+│  ├─ fitbit/
+│  │  ├─ steps.json, calories.json, distance.json   <span class="d">dakikalık</span>
+│  │  ├─ heart_rate_kucultulmus.json                <span class="d">~dakikada bir nabız</span>
+│  │  ├─ very_/moderately_/lightly_active_minutes.json, sedentary_minutes.json   <span class="d">günlük</span>
+│  │  ├─ resting_heart_rate.json, time_in_heart_rate_zones.json                  <span class="d">günlük</span>
+│  │  ├─ sleep.json, sleep_score.csv                <span class="d">uyku oturumu</span>
+│  │  └─ exercise.json                              <span class="d">egzersiz kaydı</span>
+│  ├─ pmsys/   wellness.csv, srpe.csv, injury.csv   <span class="d">kendi bildirdiği</span>
+│  ├─ googledocs/   reporting.csv                   <span class="d">yemek, su</span>
+│  └─ food-images/   *.jpeg                         <span class="d">fotoğraf</span></pre>
+</section>
+
+<section class="sec">
+  <h2>Dosya sözlüğü (p01 değerleri)</h2>
+  <p class="lead">Veri dönemi: 1 Kasım 2019 – 31 Mart 2020, yani 152 gün. "Sıklık" sütunu bir satırın neyi temsil ettiğini söyler. Günlük tabloya çevirirken en çok buna bakacaksın.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Dosya</th><th>Sıklık</th><th class="n">Kayıt</th><th>İçindeki değer</th><th>Dikkat</th></tr></thead>
+    <tbody>
+      <tr><td><code>fitbit/steps.json</code></td><td>her dakika</td><td class="n">218.836</td><td>O dakikadaki adım</td><td>Sayı metin olarak gelir ("0"). Sayıya çevir.</td></tr>
+      <tr><td><code>fitbit/calories.json</code></td><td>her dakika</td><td class="n">218.880</td><td>O dakikada yakılan kalori</td><td>152 gün × 1440 dk = 218.880, eksiksiz.</td></tr>
+      <tr><td><code>fitbit/distance.json</code></td><td>her dakika</td><td class="n">218.836</td><td>O dakikadaki mesafe</td><td>Adımla aynı yapı.</td></tr>
+      <tr><td><code>fitbit/heart_rate_kucultulmus.json</code></td><td>~dakikada bir</td><td class="n">208.681</td><td><code>value.bpm</code> ve <code>value.confidence</code></td><td>Eksik dakikalar var. İç içe sözlük, düzleştir.</td></tr>
+      <tr><td><code>very_active / moderately_active / lightly_active / sedentary_minutes.json</code></td><td>günlük</td><td class="n">152</td><td>O gün o yoğunlukta geçen dakika</td><td>Dört dosya, her biri ayrı. Metin gelir.</td></tr>
+      <tr><td><code>resting_heart_rate.json</code></td><td>günlük</td><td class="n">152</td><td><code>value.value</code> = dinlenik nabız</td><td>Değer iki kat iç içe.</td></tr>
+      <tr><td><code>time_in_heart_rate_zones.json</code></td><td>günlük</td><td class="n">152</td><td>Nabız bölgelerinde geçen dakika</td><td>Bölge adları <code>IN_DEFAULT_ZONE_1…3</code> ve <code>BELOW_DEFAULT_ZONE_1</code>.</td></tr>
+      <tr><td><code>fitbit/sleep.json</code></td><td>uyku oturumu</td><td class="n">155</td><td><code>minutesAsleep</code>, <code>efficiency</code>, <code>levels.summary</code> (deep, light, rem, wake)</td><td>152 günden fazla kayıt var, kestirme uykular olabilir. <code>mainSleep</code> ile ana uykuyu seç.</td></tr>
+      <tr><td><code>fitbit/sleep_score.csv</code></td><td>uyku oturumu</td><td class="n">150</td><td><code>overall_score</code>, <code>deep_sleep_in_minutes</code>, <code>resting_heart_rate</code>, <code>restlessness</code></td><td>Zaman damgası uykunun bittiği an (sabah). Bu yüzden o günün sabahında bilinir.</td></tr>
+      <tr><td><code>fitbit/exercise.json</code></td><td>egzersiz</td><td class="n">190</td><td><code>activityName</code> (Walk, Run, Sport, Treadmill), <code>averageHeartRate</code>, <code>calories</code>, <code>duration</code>, <code>steps</code></td><td><code>duration</code> milisaniye. 60.000'e böl.</td></tr>
+      <tr><td><code>pmsys/wellness.csv</code></td><td>günlük anket</td><td class="n">138</td><td><code>fatigue</code>, <code>mood</code>, <code>readiness</code>, <code>sleep_duration_h</code>, <code>sleep_quality</code>, <code>soreness</code>, <code>stress</code></td><td>152 günün 14'ünde anket yok. Saat UTC ('Z'). <code>fatigue</code> bizim hedefimiz.</td></tr>
+      <tr><td><code>pmsys/srpe.csv</code></td><td>antrenman</td><td class="n">34</td><td><code>perceived_exertion</code> (zorluk), <code>duration_min</code>, <code>activity_names</code></td><td>Antrenman olmayan günler dosyada yok. Yük = 0 yaz.</td></tr>
+      <tr><td><code>pmsys/injury.csv</code></td><td>haftalık kayıt</td><td class="n">24</td><td><code>injuries</code></td><td>Çoğu <code>{}</code>, yani sakatlık yok. Bir kayıtta <code>{'right_hand': 'minor'}</code>. Metin olarak gelir.</td></tr>
+      <tr><td><code>googledocs/reporting.csv</code></td><td>günlük</td><td class="n">109</td><td><code>meals</code>, <code>weight</code>, <code>glasses_of_fluid</code>, <code>alcohol_consumed</code></td><td><code>date</code> gün/ay/yıl biçiminde. <code>timestamp</code> sütunu farklı. Tarih için <code>date</code>'i kullan.</td></tr>
+      <tr><td><code>food-images/</code></td><td>fotoğraf</td><td class="n">26</td><td>Yemek fotoğrafı</td><td>Projede kullanılmıyor.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="sec">
+  <h2>Günlük tablo nasıl yapılır?</h2>
+  <p class="lead">Tüm dosyaların sıklığı farklı. Çözüm: hepsini "kişi + gün" satırına indir ve yan yana koy. p01 için çıkan çekirdek tablo 152 satır, 18 sütun. Aşağıdaki kod p01 üzerinde çalıştırılıp denendi.</p>
+
+<pre><span class="c"># Dakikalık dosyayı güne toplar (adım, kalori)</span>
+def gunluk(dosya):
+    df = pd.read_json(f"{P}/fitbit/{dosya}.json")
+    df["deger"] = df["value"].astype(float)          <span class="c"># metni sayıya çevir</span>
+    df["gun"] = pd.to_datetime(df["dateTime"]).dt.normalize()
+    return df.groupby("gun")["deger"].sum()
+
+adim, kalori = gunluk("steps"), gunluk("calories")
+
+<span class="c"># Uyku puanı ve dinlenik nabız (sabah bilinir)</span>
+uyku = pd.read_csv(f"{P}/fitbit/sleep_score.csv", parse_dates=["timestamp"])
+uyku["gun"] = uyku["timestamp"].dt.tz_localize(None).dt.normalize()
+uyku = uyku.groupby("gun")[["overall_score", "resting_heart_rate"]].first()
+
+<span class="c"># Hedef: yorgunluk</span>
+w = pd.read_csv(f"{P}/pmsys/wellness.csv", parse_dates=["effective_time_frame"])
+w["gun"] = w["effective_time_frame"].dt.tz_localize(None).dt.normalize()
+w = w.groupby("gun")[["fatigue"]].mean()
+
+<span class="c"># Antrenman yükü = zorluk × dakika. Antrenman yoksa 0.</span>
+s = pd.read_csv(f"{P}/pmsys/srpe.csv", parse_dates=["end_date_time"])
+s["gun"] = s["end_date_time"].dt.tz_localize(None).dt.normalize()
+s["yuk"] = s["perceived_exertion"] * s["duration_min"]
+yuk = s.groupby("gun")["yuk"].sum()
+
+t = pd.DataFrame({"adim": adim, "kalori": kalori,
+                  "uyku_puani": uyku["overall_score"],
+                  "dinlenik_nabiz": uyku["resting_heart_rate"],
+                  "yuk": yuk}).join(w)
+t["yuk"] = t["yuk"].fillna(0)
+
+<span class="c"># Çekirdek özellik: günlük çok aktif geçirilen dakika</span>
+v = pd.read_json(f"{P}/fitbit/very_active_minutes.json")
+v["gun"] = pd.to_datetime(v["dateTime"]).dt.normalize()
+t["very_active_minutes"] = v.set_index("gun")["value"].astype(float)
+t = t.sort_index()
+
+<span class="c"># Geçmiş sütunları: shift(1) = önceki kayıt, bugünü içermez</span>
+<span class="c"># Önce takvim günlerinin eksiksiz/sıralı olduğundan emin ol.</span>
+for c in ["adim", "kalori", "yuk", "very_active_minutes"]:
+    t[c + "_dun"] = t[c].shift(1)
+    t[c + "_7gun_ort"] = t[c].shift(1).rolling(7, min_periods=3).mean()</pre>
+  <p class="dim" style="font-size:14px">Yukarıdaki kod tek başına çalışır. Aşağıdaki ekstra blok isteye bağlıdır. Eklersen tablo 18 sütundan 39 sütuna çıkar. Eklemezsen hiçbir şey bozulmaz. İki tabloyu (çekirdek ve ekstralı) ayrı ayrı eğitip doğrulama hatalarını karşılaştırırsan ablation deneyini yapmış olursun.</p>
+
+  <h3>Ekstra: aday sütunları ekle (isteye bağlı)</h3>
+<pre><span class="c"># Çekirdek koddan sonra çalıştırılır. Günlük dosyaları okur.</span>
+def gunluk_dosya(ad):
+    d = pd.read_json(f"{P}/fitbit/{ad}.json")
+    d["gun"] = pd.to_datetime(d["dateTime"]).dt.normalize()
+    return d.set_index("gun")["value"].astype(float)
+
+<span class="c"># Ekstra üç yoğunluk: orta, hafif aktif ve hareketsiz (çok aktif çekirdekte)</span>
+yogunluk = ["moderately_active_minutes", "lightly_active_minutes",
+            "sedentary_minutes"]
+for ad in yogunluk:
+    t[ad] = gunluk_dosya(ad)
+
+<span class="c"># Nabız bölgeleri: iç içe sözlüğü düzleştir</span>
+z = pd.read_json(f"{P}/fitbit/time_in_heart_rate_zones.json")
+z["gun"] = pd.to_datetime(z["dateTime"]).dt.normalize()
+z = pd.DataFrame(z["value"].apply(lambda v: v["valuesInZones"]).tolist(), index=z["gun"])
+z.columns = ["nabiz_" + c.lower() for c in z.columns]
+t = t.join(z)
+
+<span class="c"># Hepsi için dünün ve son 7 günün değeri (bugünü içermez)</span>
+ekstra = yogunluk + list(z.columns)
+for c in ekstra:
+    t[c + "_dun"] = t[c].shift(1)
+    t[c + "_7gun_ort"] = t[c].shift(1).rolling(7, min_periods=3).mean()
+
+<span class="c"># Modele girerken bugünün ham sütunları (adım, kalori, ekstra...) çıkar,</span>
+<span class="c"># yalnızca "_dun" ve "_7gun_ort" ile biten sütunları ve sabah değerlerini kullan.</span></pre>
+  <p class="dim" style="font-size:14px">Beklenen sonuç: p01 üzerinde çekirdek 152 satır/18 sütun, ekstra eklendiğinde 152 satır/39 sütun. Güncellenmiş kodu kendi ortamında çalıştırarak doğrula.</p>
+
+  <h3>p01'in ilk günleri (gerçek çıktı)</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Gün</th><th class="n">adım</th><th class="n">kalori</th><th class="n">uyku puanı</th><th class="n">dinlenik nabız</th><th class="n">yük</th><th class="n">fatigue</th><th class="n">adım_dün</th><th class="n">adım_7gün_ort</th></tr></thead>
+    <tbody>
+      <tr><td>2019-11-01</td><td class="n">17.873</td><td class="n">4.009</td><td class="n">76</td><td class="n">53</td><td class="n">0</td><td class="n">2</td><td class="n dim">boş</td><td class="n dim">boş</td></tr>
+      <tr><td>2019-11-02</td><td class="n">13.118</td><td class="n">3.534</td><td class="n">79</td><td class="n">53</td><td class="n">0</td><td class="n">2</td><td class="n">17.873</td><td class="n dim">boş</td></tr>
+      <tr><td>2019-11-04</td><td class="n">10.970</td><td class="n">3.353</td><td class="n">68</td><td class="n">53</td><td class="n">0</td><td class="n">3</td><td class="n">14.312</td><td class="n">15.101</td></tr>
+      <tr><td>2019-11-05</td><td class="n">16.186</td><td class="n">3.795</td><td class="n">73</td><td class="n">54</td><td class="n">210</td><td class="n">3</td><td class="n">10.970</td><td class="n">14.068</td></tr>
+      <tr><td>2019-11-06</td><td class="n">8.189</td><td class="n">3.192</td><td class="n">67</td><td class="n">52</td><td class="n">0</td><td class="n">3</td><td class="n">16.186</td><td class="n">14.492</td></tr>
+    </tbody>
+  </table></div>
+  <p class="dim" style="font-size:14px">5 Kasım'da yük 210 = zorluk 7 × 30 dakika koşu. Başlangıçtaki boş değerler normal: geçmiş henüz yok. Bütün kişiler için <code>for p in p01…p16</code> döngüsüyle aynı kod çalıştırılır, çıkan tablolar alt alta eklenir ve bir <code>kisi</code> sütunu konur.</p>
+</section>
+
+<section class="sec">
+  <h2>participant-overview.xlsx</h2>
+  <p class="lead">Tek sayfa, 16 kişi. Her satır bir kişi. Üstte iki grup başlığı var (5 km koşu, adım uzunluğu), gerçek başlıklar ikinci satırda. Okurken <code>header=1</code> kullan.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Sütun</th><th>Anlamı</th><th>Örnek (p01)</th></tr></thead>
+    <tbody>
+      <tr><td>Participant ID</td><td>Klasör adıyla aynı</td><td>p01</td></tr>
+      <tr><td>Age, Height, Gender</td><td>Yaş, boy (cm), cinsiyet</td><td>48, 195, male</td></tr>
+      <tr><td>A or B person</td><td>Veri toplamadaki grup etiketi. Projede kullanma planı yok.</td><td>A</td></tr>
+      <tr><td>Max heart rate</td><td>Maksimum nabız</td><td>182</td></tr>
+      <tr><td>Date, Minutes, Seconds</td><td>İlk 5 km koşunun tarihi ve süresi</td><td>26.11.2019, 29 dk 33 sn</td></tr>
+      <tr><td>Stride walk, Stride run</td><td>Yürürken ve koşarken adım uzunluğu (cm)</td><td>80.9, 102.9</td></tr>
+    </tbody>
+  </table></div>
+  <div class="warn">
+    <div class="w"><b>Bozuk hücreler</b>p15'te koşu bilgisi yerine "injured" yazıyor. p11 ve p14'te tarih yerine "november" yazıyor. p07 ve p12'de maksimum nabız boş. p06'da cinsiyet "male" sonunda gizli boşluk karakteri var.</div>
+    <div class="w"><b>Şüpheli sayılar</b>p14'ün koşu adım uzunluğu 11.3. Öbür kişilerde 88–129 arası, büyük ihtimalle 113 yazılacaktı. p16'nın koşu tarihi 2020-11-16 ve süresi 47 dk 28 sn, diğerlerinden çok farklı. Adım uzunlukları metin olarak kayıtlı.</div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Veri sızıntısını önleyen kurallar</h2>
+  <p class="lead">Proje belgesi ve veri açıklaması bu kuralları özellikle istiyor. Sızıntı, modelin test sırasında göremeyeceği bilgiyi eğitimde görmesidir. Sonuçlar olduğundan iyi çıkar ve hocanın ilk bakacağı şey budur.</p>
+  <div class="warn">
+    <div class="w ok"><b>Kişiye göre böl</b>Bir kişinin hiçbir günü hem eğitimde hem testte bulunmasın. 16 kişi: 12 eğitim, 2 doğrulama, 2 test. Günleri rastgele bölme.</div>
+    <div class="w ok"><b>Dönüşümleri eğitimden öğren</b>Eksik doldurma, ölçekleme ve özellik seçimi yalnızca eğitim kişileriyle öğrenilir. Doğrulama ve teste sadece uygulanır.</div>
+    <div class="w ok"><b>Sabah önerisi = sabah bilgisi</b>Dünkü adım, kalori, yük ve son gece uyku ile sabah nabzı kullanılabilir. Bugünün henüz olmamış aktivitesi kullanılamaz.</div>
+    <div class="w ok"><b>Hedef girdi olmasın</b>Yorgunluk puanı aynı tahminde hem girdi hem hedef olamaz. Aynı günün readiness, mood, soreness değerleri de girdiye konmaz.</div>
+    <div class="w ok"><b>Geçmiş ortalamaları dünden başlasın</b>7 günlük ortalamada bugün dahil olmasın. Kodda <code>shift(1)</code> bunu sağlıyor.</div>
+    <div class="w ok"><b>Test kişileri ayrı kalsın</b>Test kişileri model seçmek, ayar yapmak ya da simülatör ayarlamak için kullanılmaz.</div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Veride dikkat edilecekler</h2>
+  <div class="warn">
+    <div class="w"><b>Eksik gün</b>p01'de 152 günün 14'ünde yorgunluk anketi yok. Bu günler hedef olarak eğitimden çıkarılır. Doldurulmaz.</div>
+    <div class="w"><b>Küçük veri</b>Kişi başına yaklaşık 138 anket günü, toplam 16 kişi. Rapor zayıf yanlarında bunu zaten yazıyor.</div>
+    <div class="w"><b>Sayılar metin gelir</b>JSON dosyalarında değerler tırnak içinde ("0"). <code>astype(float)</code> unutulursa toplama işlemi sayıları birleştirir.</div>
+    <div class="w"><b>İç içe sözlükler</b>Nabız ve dinlenik nabız dosyalarında değer bir sözlüğün içinde. <code>value.bpm</code>, <code>value.value</code> diye açılır.</div>
+    <div class="w"><b>Zaman dilimi</b>wellness ve srpe saatleri UTC ('Z'), fitbit saatleri yerel. Günlük tabloda sadece tarih kısmını kullanınca fark pek önemli olmaz, ama gece yarısı kayıtlarını kontrol et.</div>
+    <div class="w"><b>Yemek verisi</b>Projede kullanılmıyor, zorunlu değil. Sade kalmak için dışarıda bırak.</div>
+  </div>
+</section>
+
+</div>
+
+</body></html>
