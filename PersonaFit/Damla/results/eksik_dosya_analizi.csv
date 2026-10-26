@@ -1,0 +1,18 @@
+﻿dosya,kisi_sayisi,eksik_kisiler,toplam_kayit
+fitbit/calories.json,16,,3377529
+fitbit/distance.json,16,,1534705
+fitbit/exercise.json,16,,2440
+fitbit/heart_rate.json,6,"p01, p02, p04, p05, p06, p07, p08, p11, p15, p16",5884284
+fitbit/lightly_active_minutes.json,15,p12,2244
+fitbit/moderately_active_minutes.json,16,,2396
+fitbit/resting_heart_rate.json,14,"p12, p13",1803
+fitbit/sedentary_minutes.json,16,,2396
+fitbit/sleep.json,16,,2064
+fitbit/sleep_score.csv,16,,1836
+fitbit/steps.json,16,,1534705
+fitbit/time_in_heart_rate_zones.json,16,,2178
+fitbit/very_active_minutes.json,16,,2396
+googledocs/reporting.csv,15,p15,1569
+pmsys/injury.csv,15,p08,225
+pmsys/srpe.csv,16,,783
+pmsys/wellness.csv,16,,1747
