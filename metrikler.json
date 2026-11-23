@@ -1,0 +1,123 @@
+{
+  "seed": 42,
+  "ana_model": "Random Forest",
+  "bolumler": {
+    "egitim": {
+      "katilimcilar": [
+        "p10",
+        "p04",
+        "p01",
+        "p08",
+        "p13",
+        "p06",
+        "p03",
+        "p05",
+        "p15",
+        "p02",
+        "p14",
+        "p09"
+      ],
+      "gozlem": 752
+    },
+    "dogrulama": {
+      "katilimcilar": [
+        "p12",
+        "p11"
+      ],
+      "gozlem": 102
+    },
+    "test": {
+      "katilimcilar": [
+        "p07",
+        "p16"
+      ],
+      "gozlem": 106
+    }
+  },
+  "modeller": {
+    "Sabit medyan": {
+      "girdiler": "sensor",
+      "parametreler": {},
+      "dogrulama": {
+        "MAE": 0.3431372549019608,
+        "RMSE": 0.6022832373885361,
+        "R2": -0.13231323132313255,
+        "kisi_ortalama_MAE": 0.3510971786833856
+      },
+      "test": {
+        "MAE": 0.24528301886792453,
+        "RMSE": 0.5139561687500467,
+        "R2": -0.1948470209339772,
+        "kisi_ortalama_MAE": 0.37799043062200954
+      },
+      "kisi_bazinda_test": {
+        "p07": {
+          "n": 95,
+          "MAE": 0.21052631578947367
+        },
+        "p16": {
+          "n": 11,
+          "MAE": 0.5454545454545454
+        }
+      }
+    },
+    "Ridge": {
+      "girdiler": "sensor_ve_gecmis_bildirim",
+      "parametreler": {
+        "alpha": 10
+      },
+      "dogrulama": {
+        "MAE": 0.48578816535062297,
+        "RMSE": 0.5716912426523154,
+        "R2": -0.02020655371476976,
+        "kisi_ortalama_MAE": 0.49386305613566683
+      },
+      "test": {
+        "MAE": 0.4114897982754132,
+        "RMSE": 0.5123745943584436,
+        "R2": -0.18750463666286432,
+        "kisi_ortalama_MAE": 0.46867765198303485
+      },
+      "kisi_bazinda_test": {
+        "p07": {
+          "n": 95,
+          "MAE": 0.39651202706627425
+        },
+        "p16": {
+          "n": 11,
+          "MAE": 0.5408432768997955
+        }
+      }
+    },
+    "Random Forest": {
+      "girdiler": "sensor_ve_gecmis_bildirim",
+      "parametreler": {
+        "max_depth": 4,
+        "min_samples_leaf": 15,
+        "max_features": 0.7
+      },
+      "dogrulama": {
+        "MAE": 0.4487163353400882,
+        "RMSE": 0.5661511283331309,
+        "R2": -0.0005292377960919303,
+        "kisi_ortalama_MAE": 0.4621191670737016
+      },
+      "test": {
+        "MAE": 0.36238000846267543,
+        "RMSE": 0.4709609335229514,
+        "R2": -0.0032979071523520087,
+        "kisi_ortalama_MAE": 0.45016965100796436
+      },
+      "kisi_bazinda_test": {
+        "p07": {
+          "n": 95,
+          "MAE": 0.3393874830341474
+        },
+        "p16": {
+          "n": 11,
+          "MAE": 0.5609518189817814
+        }
+      }
+    }
+  }
+}
