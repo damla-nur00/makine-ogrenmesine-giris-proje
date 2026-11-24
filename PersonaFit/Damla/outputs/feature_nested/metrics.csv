@@ -1,0 +1,4 @@
+strategy,roc_auc,ap,tp_top10,recall_top10,within_person_auc
+original_13,0.735981,0.167839,25,0.221239,0.565423
+candidate_13,0.746247,0.187206,28,0.247788,0.588442
+nested_selected,0.746247,0.187206,28,0.247788,0.588442
