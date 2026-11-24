@@ -62,7 +62,6 @@ Her betik kendi adıyla `outputs/<betik_adı>/` klasörüne sonuç üretir:
 
 Günlük tablo ve ham katılımcı kayıtları, `split.json`, üretilen çıktılar ve eğitilmiş modeller **yerelde kalır** ve `.gitignore` nedeniyle GitHub'a yüklenmez. Çıktıların adlandırılması için kaynak betiklerin varsayılan `--out-dir` yolları eşleştirildi; ayrıca komut satırında `--out-dir` verilebilir.
 
-## Sunumda söylenebilecek sonuç
 
 Önceki geliştirme deneylerinde regresyonda kişisel medyan MAE yaklaşık **0,426**, GBM MAE yaklaşık **0,447**: ML, kişisel medyanı geçemedi. Sonraki keşif deneylerinde yeni 13 özellikli L2 lojistik regresyon AP yaklaşık **0,187**; 9 çekirdek + 4 uyku adayında Recall@10% yaklaşık **%32,7**. Bu değerler bu branch üzerinde **yeniden çalıştırılmış/onaylanmış sayılmaz** ve iki yeni aday henüz kesin seçim değildir.
 
