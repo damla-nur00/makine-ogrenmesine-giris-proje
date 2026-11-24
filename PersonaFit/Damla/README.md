@@ -70,3 +70,20 @@ Aynı 14 geliştirme katılımcısının tekrar kullanılması seçim yanlılı�
 ## Kapsam notu
 
 25 özellik, L1/elastic net, XGBoost ve LightGBM ile yapılan bazı son keşif deneyleri önceki çalışmanın yerel betikleri/raporlarıdır; **bu branch'e henüz taşınmadı**. Sunumda bunları burada çalıştırılmış gibi göstermeyin.
+
+
+## Tüm yorgunluk tahmini çalışmalarının arşivi (güncellendi)
+
+Orijinal `ml` reposundaki ilk regresyon ve yorgunluk betikleri de aktarıldı: `train_fatigue_model.py`, `train_gbm_a_integration.py`, `real_predictor_v2.py` ve `07_testler/test_grouped.py`. **`test_grouped.py` mühürlü testi açacağı için çalıştırılmamalı.** Eski `train_fatigue_model.py` farklı bir kronolojik protokoldür; yeni kişi-bazlı sonuçlarla karşılaştırırken bu fark belirtilmelidir. Simülatöre bağımlı `evaluate_fixed_fatigue_v1.py` sadece tarihsel referanstır, bu sunumdaki tahmin çalıştırıcısına dahil değildir.
+
+`06_deneyler` klasörüne ek olarak **8 keşif betiği** aktarıldı: `individual_feature_ablation.py`, `feature_combination_followup.py`, `experiment_25_feature_groups.py`, `compare_recommended_algorithms.py`, `nested_model_selection.py`, `daily_change_exploratory.py`, `weighted_gbm_exploratory.py`, `compare_logistic_class_weight.py`. Araştırma metotlarında bir değişiklik yapılmadı; kişisel `/mnt/data` dosya yolları yerel `outputs/fatigue_daily.csv` ve kendi `outputs/<betik_adı>/` çıktı klasörlerine uyarlandı.
+
+Bu ek çalışmaları kurup çalıştırmak için:
+
+```powershell
+python -m pip install -r requirements_exploratory.txt
+python run_fatigue_experiments.py --exploratory
+python run_fatigue_experiments.py --check --exploratory
+```
+
+**Sonuç dosyaları** GitHub'da `outputs/` altında deney bazında arşivlendi. Kaynak, tamlık ve kişisel veri güvenliği notları için [outputs/README_RESULTS.md](outputs/README_RESULTS.md) dosyasına bak. Bu arşivdeki tablolar geçmiş geliştirme deneylerine aittir; **burada yeniden üretilmiş oldukları iddia edilmez**. Resmî E1, E2, E3 ve LOPO'nun tam günlük/katsal CSV çıktıları henüz yeni branch'te çalıştırılmadı; bunların kaydı ancak orijinal donmuş split ve PMData dosyalarıyla yerelde üretilebilir. `outputs/` gitignore kapsamındadır; açık GitHub'da özellikle toplu sonuç özetleri izlenir, kişi/gün bazlı tahminler izlenmez.
