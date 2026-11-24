@@ -1,0 +1,5 @@
+model,auc,ap,recall_at10,within_person_auc
+logistic_C001,0.735981,0.167839,0.221239,0.565423
+catboost_A,0.715682,0.160464,0.247788,0.556102
+nested_selected,0.7341,0.1490,0.2301,0.5517
+logistic_C1,0.7046,0.1402,0.2124,0.5521
