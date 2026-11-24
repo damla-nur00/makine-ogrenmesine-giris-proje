@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0.0",
+  "experiment": "E3_high_fatigue",
+  "status": "post_E2_pre_E3_candidate_freeze",
+  "selection_context": "Candidates chosen after observing E2 regression results; E3 exploratory validation is not an independent preregistration from before E2.",
+  "label_rule": "fatigue >= 4; fatigue < 4 is negative, including 3.5",
+  "group_definitions": "Use exact A and B cumulative_sets of experiment_ablation.feature_mapping on development participants only",
+  "feature_count_assertions": {
+    "A": 13,
+    "B": 103
+  },
+  "validation": "Existing 7 grouped development folds; no test",
+  "models": [
+    {
+      "name": "logistic_A",
+      "algorithm": "LogisticRegression",
+      "features": "A",
+      "hyperparameters": {
+        "C": 1,
+        "max_iter": 3000,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "random_state": 42
+      },
+      "preprocessing": [
+        "SimpleImputer(strategy='median',keep_empty_features=True)",
+        "StandardScaler()"
+      ]
+    },
+    {
+      "name": "random_forest_A",
+      "algorithm": "RandomForestClassifier",
+      "features": "A",
+      "hyperparameters": {
+        "n_estimators": 300,
+        "min_samples_leaf": 8,
+        "max_features": "sqrt",
+        "class_weight": "balanced_subsample",
+        "random_state": 42,
+        "n_jobs": -1
+      },
+      "preprocessing": [
+        "SimpleImputer(strategy='median',keep_empty_features=True)"
+      ]
+    },
+    {
+      "name": "logistic_B",
+      "algorithm": "LogisticRegression",
+      "features": "B",
+      "hyperparameters": {
+        "C": 1,
+        "max_iter": 3000,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "random_state": 42
+      },
+      "preprocessing": [
+        "SimpleImputer(strategy='median',keep_empty_features=True)",
+        "StandardScaler()"
+      ]
+    }
+  ],
+  "reference_scores": [
+    {
+      "name": "personal_median_reference",
+      "source": "baseline_predictions(...)[baseline_personal_median]",
+      "meaning": "continuous fatigue level used only as ranking score; NOT a risk probability"
+    },
+    {
+      "name": "previous_fatigue_reference",
+      "source": "baseline_predictions(...)[baseline_previous_fatigue]",
+      "meaning": "past fatigue level used only as ranking score; NOT a risk probability"
+    }
+  ],
+  "statistics": {
+    "top_fraction": 0.1,
+    "bootstrap_participants": 2000,
+    "bootstrap_seed": 42,
+    "within_person_min_positives": 3,
+    "within_person_min_negatives": 3,
+    "required_metrics": [
+      "roc_auc",
+      "average_precision",
+      "recall_at_10pct",
+      "precision_at_10pct",
+      "fpr_at_10pct",
+      "within_person_mean_roc_auc"
+    ]
+  },
+  "success_thresholds_source": "experiment_protocol.json E3_high_fatigue.preregistered_targets",
+  "model_selection_policy": "All four exploratory thresholds must pass; do not pick a winner by a combined score and do not interpret as clinically safe.",
+  "risk_probability_caveat": "Uncalibrated predict_proba may not be calibrated; no user-facing risk percentages without separate calibration assessment.",
+  "test_evaluated": false
+}
