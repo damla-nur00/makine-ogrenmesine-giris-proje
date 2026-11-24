@@ -8,6 +8,7 @@
 
 | Çalışma | Kod | GitHub'a kaydedilen özet çıktı |
 |---|---|---|
+| Tarihsel kronolojik regresyon (eski protokol) | `02_yorgunluk_tahmini/train_fatigue_model.py` | `train_fatigue_model/historical_chronological_metrics.csv` (orijinal ml README özeti; yeni grup CV ile karşılaştırma yapmayın) |
 | İlk grup doğrulama ve regresyon | `02_yorgunluk_tahmini/train_grouped.py` | `train_grouped/historical_validation_metrics.json`, `historical_validation_summary.csv` |
 | Önceki 13 ile yeni 13 | `02_yorgunluk_tahmini/experiment_high_fatigue_new_13_features.py` | `experiment_high_fatigue_new_13_features/historical_metrics.csv` |
 | 9 çekirdek + 4 uyku | `02_yorgunluk_tahmini/experiment_high_fatigue_core9_sleep4.py` | `experiment_high_fatigue_core9_sleep4/historical_metrics.csv` |
