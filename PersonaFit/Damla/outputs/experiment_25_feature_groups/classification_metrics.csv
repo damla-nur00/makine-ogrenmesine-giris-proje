@@ -1,0 +1,15 @@
+model,n_features,roc_auc,average_precision,tp_at10,recall_at10,within_person_auc
+original13,13,0.7360,0.1678,25,0.2212,0.5654
+new13_previous,13,0.7462,0.1872,28,0.2478,0.5884
+core9,9,0.7391,0.1770,29,0.2566,0.6036
+core9_plus_sleep,13,0.7451,0.1796,37,0.3274,0.5702
+core9_plus_heart,12,0.7284,0.1757,31,0.2743,0.5439
+core9_plus_training,12,0.7310,0.1712,27,0.2389,0.6268
+core9_plus_wellness,12,0.7343,0.1751,30,0.2655,0.5889
+core9_plus_activity,12,0.7143,0.1709,31,0.2743,0.5901
+core9_plus_sleep_heart,16,0.7355,0.1778,37,0.3274,0.5499
+core9_plus_sleep_heart_training,19,0.7312,0.1689,34,0.3009,0.5939
+core9_plus_sleep_heart_training_wellness,22,0.7281,0.1660,31,0.2743,0.5821
+all25,25,0.7191,0.1594,33,0.2920,0.5848
+all25_plus_morning2_EXPLORATORY,27,0.7176,0.1575,30,0.2655,0.5863
+new13_plus_morning2_EXPLORATORY,15,0.7427,0.1865,27,0.2389,0.5848
