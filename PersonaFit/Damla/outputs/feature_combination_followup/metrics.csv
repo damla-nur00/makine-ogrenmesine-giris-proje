@@ -1,0 +1,9 @@
+experiment,n_features,roc_auc,average_precision,tp_at10,recall_at10,within_person_auc
+original_13,13,0.735981,0.167839,25,0.221239,0.565423
+remove_median_and_mean14,11,0.745438,0.174464,26,0.2301,0.5807
+add_readiness,14,0.7368,0.1735,27,0.2389,0.5718
+add_soreness,14,0.7343,0.1718,26,0.2301,0.5685
+add_readiness_and_soreness,15,0.7350,0.1775,28,0.2478,0.5718
+remove_two_add_readiness,12,0.7471,0.1810,28,0.2478,0.5874
+remove_two_add_soreness,12,0.7446,0.1784,27,0.2389,0.5792
+remove_two_add_both,13,0.746247,0.187206,28,0.247788,0.588442
