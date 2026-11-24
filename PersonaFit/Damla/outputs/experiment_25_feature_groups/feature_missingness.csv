@@ -1,0 +1,30 @@
+<PARSED TEXT FOR SHEET: 1 / 1 TABS
+TAB NAME: feature_missingness.csv>
+index,group,feature,missing_pct,distinct
+0,core9,history_wellness_fatigue_lag1,17.063492063492063,6
+1,core9,history_wellness_fatigue_mean7,1.1243386243386242,50
+2,core9,history_wellness_fatigue_mean28,0.9259259259259258,264
+3,core9,p_mean,0.9259259259259258,924
+4,core9,p_std,4.62962962962963,1374
+5,core9,fat_trend,1.1243386243386242,702
+6,core9,fat_vs_pers,1.1243386243386242,1068
+7,core9,history_wellness_readiness_lag1,17.063492063492063,14
+8,core9,history_wellness_soreness_lag1,17.063492063492063,6
+9,sleep4,dv_sleep_score_overall_score,10.912698412698411,1021
+10,sleep4,dw_sleep_score_overall_score,3.7037037037037033,1058
+11,sleep4,history_sleep_efficiency_mean7,3.3068783068783065,167
+12,sleep4,history_sleep_minutesAsleep_mean7,3.3068783068783065,973
+13,heart3,history_cardio_resting_heart_rate_mean7,17.394179894179896,1239
+14,heart3,dv_cardio_resting_heart_rate,17.394179894179896,1242
+15,heart3,dw_cardio_resting_heart_rate,17.394179894179896,1200
+16,training3,history_srpe_load_sum7,16.732804232804234,296
+17,training3,history_srpe_acute_chronic_ratio,18.71693121693122,741
+18,training3,dw_srpe_load,16.732804232804234,845
+19,wellness3,history_wellness_stress_lag1,17.12962962962963,5
+20,wellness3,dw_wellness_mood,1.1243386243386242,531
+21,wellness3,history_wellness_sleep_quality_mean7,1.1243386243386242,54
+22,activity3,history_activity_very_active_minutes_sum7,0.1984126984126984,669
+23,activity3,history_movement_steps_total_mean7,1.6534391534391533,1478
+24,activity3,dow,0.0,7
+25,morning2,morning_sleep_score_overall_score_delta28,46.89153439153439,672
+26,morning2,morning_sleep_minutesAsleep_delta28,46.62698412698413,789
