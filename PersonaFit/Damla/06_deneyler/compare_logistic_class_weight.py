@@ -1,6 +1,7 @@
 # Paths adapted for this repository; study model logic retained.
 """Exploratory comparison; NOT the frozen E3 split, never loads sealed p05/p12 rows."""
 from pathlib import Path
+import sys
 import json
 import numpy as np
 import pandas as pd
@@ -10,6 +11,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_auc_score,average_precision_score,precision_score,recall_score,f1_score,confusion_matrix
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / '02_yorgunluk_tahmini'))
 from fatigue_models import add_personal_features, PERSONAL_COLUMNS, FATIGUE_HISTORY_COLUMNS
 root=Path(__file__).resolve().parents[1]; out=root/'outputs'/'compare_logistic_class_weight';out.mkdir(parents=True,exist_ok=True)
 ids=['p01','p02','p03','p04','p06','p07','p08','p09','p10','p11','p13','p14','p15','p16']
