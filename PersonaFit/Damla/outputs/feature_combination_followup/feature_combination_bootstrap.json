@@ -1,0 +1,202 @@
+{
+  "remove_two_add_both": {
+    "deltas": {
+      "roc_auc": {
+        "observed": 0.01026649882659536,
+        "ci95": [
+          -0.008408824053834318,
+          0.03167790040559636
+        ]
+      },
+      "average_precision": {
+        "observed": 0.019366976674428327,
+        "ci95": [
+          0.007189445691234784,
+          0.033114839421335585
+        ]
+      }
+    },
+    "person_auc_improved": 11,
+    "person_auc_evaluable": 13,
+    "by_person": [
+      {
+        "participant": "p01",
+        "roc_auc_delta": 0.0948905109489051,
+        "n": 138,
+        "positives": 1
+      },
+      {
+        "participant": "p02",
+        "roc_auc_delta": 0.0,
+        "n": 99,
+        "positives": 1
+      },
+      {
+        "participant": "p03",
+        "roc_auc_delta": 0.012987012987012991,
+        "n": 78,
+        "positives": 1
+      },
+      {
+        "participant": "p04",
+        "roc_auc_delta": 0.024662360540223083,
+        "n": 144,
+        "positives": 13
+      },
+      {
+        "participant": "p06",
+        "roc_auc_delta": 0.047945205479452024,
+        "n": 147,
+        "positives": 1
+      },
+      {
+        "participant": "p07",
+        "roc_auc_delta": -0.07751937984496116,
+        "n": 132,
+        "positives": 3
+      },
+      {
+        "participant": "p08",
+        "roc_auc_delta": 0.023255813953488413,
+        "n": 103,
+        "positives": 17
+      },
+      {
+        "participant": "p09",
+        "roc_auc_delta": 0.000568181818181801,
+        "n": 102,
+        "positives": 22
+      },
+      {
+        "participant": "p10",
+        "roc_auc_delta": 0.08333333333333326,
+        "n": 95,
+        "positives": 3
+      },
+      {
+        "participant": "p13",
+        "roc_auc_delta": 0.06481481481481488,
+        "n": 68,
+        "positives": 14
+      },
+      {
+        "participant": "p14",
+        "roc_auc_delta": 0.03376623376623389,
+        "n": 124,
+        "positives": 14
+      },
+      {
+        "participant": "p15",
+        "roc_auc_delta": 0.021915584415584388,
+        "n": 93,
+        "positives": 16
+      },
+      {
+        "participant": "p16",
+        "roc_auc_delta": 0.0323809523809524,
+        "n": 82,
+        "positives": 7
+      }
+    ]
+  },
+  "remove_two_add_readiness": {
+    "deltas": {
+      "roc_auc": {
+        "observed": 0.011164738403537156,
+        "ci95": [
+          -0.010181184387388747,
+          0.0375190084561659
+        ]
+      },
+      "average_precision": {
+        "observed": 0.013136425942981977,
+        "ci95": [
+          0.0036318082073741537,
+          0.026068294622929974
+        ]
+      }
+    },
+    "person_auc_improved": 10,
+    "person_auc_evaluable": 13,
+    "by_person": [
+      {
+        "participant": "p01",
+        "roc_auc_delta": 0.08029197080291972,
+        "n": 138,
+        "positives": 1
+      },
+      {
+        "participant": "p02",
+        "roc_auc_delta": 0.0,
+        "n": 99,
+        "positives": 1
+      },
+      {
+        "participant": "p03",
+        "roc_auc_delta": 0.012987012987012991,
+        "n": 78,
+        "positives": 1
+      },
+      {
+        "participant": "p04",
+        "roc_auc_delta": 0.005871990604815025,
+        "n": 144,
+        "positives": 13
+      },
+      {
+        "participant": "p06",
+        "roc_auc_delta": 0.0547945205479452,
+        "n": 147,
+        "positives": 1
+      },
+      {
+        "participant": "p07",
+        "roc_auc_delta": -0.06976744186046513,
+        "n": 132,
+        "positives": 3
+      },
+      {
+        "participant": "p08",
+        "roc_auc_delta": 0.028727770177838563,
+        "n": 103,
+        "positives": 17
+      },
+      {
+        "participant": "p09",
+        "roc_auc_delta": 0.0,
+        "n": 102,
+        "positives": 22
+      },
+      {
+        "participant": "p10",
+        "roc_auc_delta": 0.10144927536231885,
+        "n": 95,
+        "positives": 3
+      },
+      {
+        "participant": "p13",
+        "roc_auc_delta": 0.05687830687830686,
+        "n": 68,
+        "positives": 14
+      },
+      {
+        "participant": "p14",
+        "roc_auc_delta": 0.018831168831168865,
+        "n": 124,
+        "positives": 14
+      },
+      {
+        "participant": "p15",
+        "roc_auc_delta": 0.016233766233766267,
+        "n": 93,
+        "positives": 16
+      },
+      {
+        "participant": "p16",
+        "roc_auc_delta": 0.03999999999999998,
+        "n": 82,
+        "positives": 7
+      }
+    ]
+  }
+}
