@@ -26,6 +26,16 @@ STEPS = [
     ("experiment_high_fatigue_new_13_features", "02_yorgunluk_tahmini/experiment_high_fatigue_new_13_features.py", ("summary.json", "metrics.csv", "oof_predictions.csv")),
     ("experiment_high_fatigue_core9_sleep4", "02_yorgunluk_tahmini/experiment_high_fatigue_core9_sleep4.py", ("summary.json", "metrics.csv", "oof_predictions.csv")),
 ]
+EXPLORATORY_STEPS = [
+    ("individual_feature_ablation", "06_deneyler/individual_feature_ablation.py", ("individual_feature_ablation_metrics.csv",)),
+    ("feature_combination_followup", "06_deneyler/feature_combination_followup.py", ("feature_combination_metrics.csv",)),
+    ("experiment_25_feature_groups", "06_deneyler/experiment_25_feature_groups.py", ("classification_metrics.csv", "regression_metrics.csv")),
+    ("compare_recommended_algorithms", "06_deneyler/compare_recommended_algorithms.py", ("metrics.csv",)),
+    ("nested_model_selection", "06_deneyler/nested_model_selection.py", ("nested_metrics.csv",)),
+    ("daily_change_exploratory", "06_deneyler/daily_change_exploratory.py", ("daily_change_metrics.csv",)),
+    ("weighted_gbm_exploratory", "06_deneyler/weighted_gbm_exploratory.py", ("metrics.csv",)),
+    ("compare_logistic_class_weight", "06_deneyler/compare_logistic_class_weight.py", ("metrics.csv",)),
+]
 
 
 def verify_inputs():
@@ -43,7 +53,7 @@ def verify_inputs():
 
 def check(selected):
     results = {}
-    for name, _, required in STEPS:
+    for name, _, required in STEPS + EXPLORATORY_STEPS:
         if name not in selected:
             continue
         folder = ROOT / "outputs" / name
@@ -58,9 +68,10 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--only", help="Comma-separated script names; default: all")
     ap.add_argument("--check", action="store_true", help="Check outputs without running scripts")
+    ap.add_argument("--exploratory", action="store_true", help="Also run additional exploratory models; requires requirements_exploratory.txt")
     args = ap.parse_args()
-    all_names = {s[0] for s in STEPS}
-    selected = set(args.only.split(",")) if args.only else all_names
+    all_names = {s[0] for s in STEPS + EXPLORATORY_STEPS}
+    selected = set(args.only.split(",")) if args.only else ({s[0] for s in STEPS} | ({s[0] for s in EXPLORATORY_STEPS} if args.exploratory else set()))
     unknown = selected - all_names
     if unknown:
         ap.error("Unknown script names: " + ", ".join(sorted(unknown)))
@@ -79,10 +90,12 @@ def main():
         "split_sha256": digest, "sealed_test_evaluated": False,
         "experiments": {},
     }
-    for name, script, needed in STEPS:
+    for name, script, needed in STEPS + EXPLORATORY_STEPS:
         if name not in selected:
             continue
-        command = [sys.executable, str(ROOT / script), "--out-dir", str(ROOT / "outputs" / name)]
+        command = [sys.executable, str(ROOT / script)]
+        if name not in {x[0] for x in EXPLORATORY_STEPS}:
+            command += ["--out-dir", str(ROOT / "outputs" / name)]
         if name == "experiment_lopo":
             command += ["--seven-fold-predictions", str(ROOT / "outputs/experiment_high_fatigue/validation_predictions.csv")]
         if name == "experiment_fatigue_change_errors":
