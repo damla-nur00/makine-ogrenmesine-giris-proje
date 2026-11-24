@@ -1,0 +1,245 @@
+{
+  "schema_version": "1.0.0",
+  "project": "PersonaFit — PMData personalized fatigue prediction",
+  "status": "preregistered_development_protocol",
+  "frozen_on": "2026-11-22",
+  "provenance": {
+    "personalized_training_commit": "1c3ca575b234c395f28ea28807866268f92a5175",
+    "previous_grouped_split_sha256": "8f053e7dc1ee6a4fd7d34a7a590079a11fe53cc9036328b27a63f2fc1a76437e",
+    "prior_validation_reference": {
+      "development_people": 14,
+      "validation_rows": 1512,
+      "baseline_personal_median_mae": 0.42612939614322826,
+      "gbm_abs_personal_mae": 0.4466771233505054,
+      "high_fatigue_days": 113
+    },
+    "caution": "Historical chronological experiments must not be directly compared with the participant-disjoint grouped protocol."
+  },
+  "data": {
+    "dataset": "PMData",
+    "participants_total": 16,
+    "prepared_features": "outputs/fatigue_daily.csv",
+    "sealed_split_path": "outputs/split.json",
+    "target_column": "fatigue",
+    "target_scale": [
+      1,
+      5
+    ],
+    "same_day_features": "Only measured before target-report timestamp; other sensor data are lagged/past-only.",
+    "past_personal_labels_allowed": true,
+    "cold_start_definition": "Number of prior labeled fatigue observations, not calendar days.",
+    "train_test_rule": "Do not change sealed split or read test outcomes during development."
+  },
+  "validation": {
+    "primary": {
+      "name": "grouped_7x12_2",
+      "development_participants": 14,
+      "folds": 7,
+      "train_people_per_fold": 12,
+      "validation_people_per_fold": 2,
+      "selection_allowed": true,
+      "pooled_scoring": "Aggregate only out-of-fold predictions on all development people; do not average unweighted fold metrics for model selection."
+    },
+    "secondary": {
+      "name": "LOPO_14",
+      "folds": 14,
+      "train_people_per_fold": 13,
+      "validation_people_per_fold": 1,
+      "selection_allowed": false,
+      "reporting": "Supplementary robustness and participant-level heterogeneity; no hyperparameter or threshold tuning based on LOPO results."
+    },
+    "sealed_test": {
+      "participants": 2,
+      "run_only_after_all_model_and_threshold_decisions": true,
+      "one_off": true,
+      "no_retraining_after_viewing_results": true
+    }
+  },
+  "analysis_common": {
+    "random_seed": 42,
+    "bootstrap": {
+      "unit": "participant",
+      "iterations": 2000,
+      "confidence_level": 0.95,
+      "interval": "percentile",
+      "method": "resample participants with replacement, keeping each sampled participant's entire set of out-of-fold predictions; duplicates retained as resampled clusters",
+      "invalid_auc_draws": "Exclude AUC/AP draws without both classes, report invalid and valid draw counts and any unavailable CI."
+    },
+    "report": [
+      "sample counts per participant and period",
+      "pooled metrics",
+      "per-person metrics",
+      "mean and standard deviation across people when defined",
+      "95% participant-cluster bootstrap intervals",
+      "missing/undefined metrics"
+    ],
+    "leakage_policy": "All imputers, scalers and estimators fit on training participants only. Personal history for validation participants is derived exclusively from their own earlier labels (shift=1); this represents an online-follow-up scenario, NOT fully label-free cold start.",
+    "no_test_based_tuning": true
+  },
+  "experiments": [
+    {
+      "id": "E1_cold_start",
+      "order": 1,
+      "goal": "Describe existing models as personal labeled history accumulates; no hyperparameter updates.",
+      "bins": [
+        {
+          "label": "1-7",
+          "prior_labeled_observations_min": 0,
+          "prior_labeled_observations_max": 6
+        },
+        {
+          "label": "8-14",
+          "prior_labeled_observations_min": 7,
+          "prior_labeled_observations_max": 13
+        },
+        {
+          "label": "15+",
+          "prior_labeled_observations_min": 14,
+          "prior_labeled_observations_max": null
+        }
+      ],
+      "strategies": [
+        "baseline_train_median",
+        "baseline_personal_median",
+        "gbm_abs_personal"
+      ],
+      "personal_median_shrinkage_k": 5,
+      "change_k_during_experiment": false,
+      "metrics_primary": [
+        "MAE"
+      ],
+      "metrics_secondary": [
+        "RMSE",
+        "per_person_MAE",
+        "participant_bootstrap_CI_95"
+      ],
+      "implementation_note": "Existing validation_metrics.json stores only aggregate metrics, not individual out-of-fold predictions. Re-run development folds with stored OOF predictions as required; no access to sealed test."
+    },
+    {
+      "id": "E2_feature_ablation",
+      "order": 2,
+      "goal": "Compare incremental feature families under the same participant split.",
+      "feature_sets": [
+        {
+          "id": "A",
+          "includes": [
+            "past_fatigue",
+            "past_only_personal_stats"
+          ]
+        },
+        {
+          "id": "B",
+          "extends": "A",
+          "adds": [
+            "sleep"
+          ]
+        },
+        {
+          "id": "C",
+          "extends": "B",
+          "adds": [
+            "resting_heart_rate",
+            "other_heart_rate"
+          ]
+        },
+        {
+          "id": "D",
+          "extends": "C",
+          "adds": [
+            "training_load",
+            "sRPE"
+          ]
+        },
+        {
+          "id": "E",
+          "extends": "D",
+          "adds": [
+            "steps",
+            "calories",
+            "distance",
+            "activity_minutes",
+            "heart_rate_zones",
+            "exercise_activity"
+          ]
+        }
+      ],
+      "model_candidates": [
+        "gbm_abs_personal",
+        "ridge_personal"
+      ],
+      "baseline": "baseline_personal_median",
+      "feature_definitions_rule": "Before running, write exact disjoint feature-column mapping for every group and verify selected model pipelines actually consume the mapped columns. No data-driven post-hoc remapping.",
+      "main_metric": "pooled_MAE",
+      "secondary_metrics": [
+        "RMSE",
+        "per_person_MAE",
+        "participant_bootstrap_CI_95"
+      ],
+      "adoption_rule": {
+        "pooled_MAE_lower_than_personal_median": true,
+        "participants_with_strictly_lower_MAE_at_least": 9,
+        "of": 14,
+        "comparison_to_group_A": "Also report each model/feature group's incremental effect versus its own group-A version.",
+        "tie_or_uncertain": "Prefer simpler feature group/model; describe confidence interval without treating 9/14 as a significance test."
+      }
+    },
+    {
+      "id": "E3_high_fatigue",
+      "order": 3,
+      "goal": "Explore discrimination of high-fatigue days; do not claim safety from model alone.",
+      "primary_task": "binary classification: fatigue >= 4",
+      "negative_class": "fatigue < 4 (including 3.5)",
+      "optional_three_class": {
+        "low": "fatigue <= 2",
+        "middle": "2 < fatigue < 4",
+        "high": "fatigue >= 4",
+        "role": "supplementary only"
+      },
+      "metric_definitions": {
+        "ROC_AUC": "pooled development out-of-fold risk probabilities/scores; report as undefined when either class absent",
+        "average_precision": "sklearn average_precision_score, not trapezoidal PR-AUC",
+        "within_person_AUC": "Compute ROC-AUC for each participant with >=3 positive AND >=3 negative validation days; average participant ROC-AUC equally; report eligible and ineligible IDs/counts.",
+        "recall_at_10pct": "Rank all 7-fold development out-of-fold days by risk, descending, choose exactly ceil(0.10*N) days using deterministic participant/date ascending tie-break; detected positives divided by all positive days.",
+        "precision_at_10pct": "True positives divided by selected warning days.",
+        "false_positive_rate_at_10pct": "Selected negative days divided by all negative days."
+      },
+      "preregistered_targets": {
+        "pooled_ROC_AUC_min": 0.65,
+        "average_precision_min": 0.15,
+        "recall_at_10pct_min": 0.3,
+        "within_person_mean_ROC_AUC_min": 0.6
+      },
+      "supplementary_metrics": [
+        "precision_at_10pct",
+        "false_positive_rate_at_10pct",
+        "positive_support",
+        "participant_bootstrap_CI_95"
+      ],
+      "baseline_references": {
+        "random_ROC_AUC": 0.5,
+        "random_average_precision": "Observed prevalence in validation set (reference approximately 113/1512=0.0747); report exact observed prevalence."
+      },
+      "candidate_scope": "Freeze classification algorithms, feature sets and hyperparameters in the experiment implementation before running; do not iterate on sealed test outcomes.",
+      "decision_rule": "Targets are exploratory research benchmarks, not a clinical guarantee. Report failure plainly. Keep regression and high-fatigue risk objectives separate; no combined score."
+    }
+  ],
+  "model_selection": {
+    "regression": "Choose according to pooled 7-fold MAE and preregistered E2 adoption rule; keep personal median as fallback.",
+    "high_fatigue": "Report the E3 binary risk task separately; require all preregistered success targets for a positive exploratory claim, but do not promote to a safety controller.",
+    "do_not_tune_on_secondary_LOPO_or_sealed_test": true,
+    "no_unlimited_followup_search": "The planned experimental family is limited to E1–E3; additional tuning requires a separately versioned protocol."
+  },
+  "safety_and_rl": {
+    "safety_layer": "Separate deterministic safety filter for user-reported current/most-recent fatigue, sleep deficit, injuries and high recent training load; design and scenario-test rules independently.",
+    "prediction_role": "Supplementary uncertain signal, never sole safety gate.",
+    "RL_scope": "Gymnasium simulation and Q-Learning/DQN are future stages, not implemented in this experiment.",
+    "no_clinical_claims": true
+  },
+  "reproducibility": {
+    "preserve_previous_commits": true,
+    "do_not_overwrite_split_json": true,
+    "write_predictions_for_each_development_fold": true,
+    "save_metrics_logs_seeds_feature_lists_and_code_version": true,
+    "no_real_metrics_inferred_from_synthetic_checks": true
+  }
+}
