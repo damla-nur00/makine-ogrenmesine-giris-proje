@@ -1,0 +1,4 @@
+model,n_features,mae,rmse
+old13,13,0.459517,0.702291
+core9_plus_sleep,13,0.461165,0.705815
+all25,25,0.4679,0.7016
