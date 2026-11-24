@@ -1,0 +1,143 @@
+{
+  "validation": "7 participant-disjoint folds, exactly 12 train and 2 validation per fold",
+  "selected_strategy": "baseline_personal_median",
+  "best_ml_challenger": "gbm_abs_personal",
+  "out_of_fold_metrics": {
+    "ridge_alpha_1": {
+      "mae": 0.9425099925308636,
+      "rmse": 1.1910427711283151,
+      "r2": -2.08655401691378,
+      "rounded_accuracy": 0.33994708994708994,
+      "rounded_balanced_accuracy": 0.2189671251510203,
+      "rounded_macro_f1": 0.19497897204611653,
+      "high_fatigue_recall": 0.3008849557522124,
+      "high_fatigue_precision": 0.1033434650455927,
+      "high_fatigue_support": 113
+    },
+    "ridge_alpha_10": {
+      "mae": 0.8269007708768923,
+      "rmse": 1.0782764295291525,
+      "r2": -1.529760402973162,
+      "rounded_accuracy": 0.3941798941798942,
+      "rounded_balanced_accuracy": 0.2024266691249063,
+      "rounded_macro_f1": 0.20397167246818806,
+      "high_fatigue_recall": 0.19469026548672566,
+      "high_fatigue_precision": 0.09954751131221719,
+      "high_fatigue_support": 113
+    },
+    "ridge_alpha_50": {
+      "mae": 0.7761589207289991,
+      "rmse": 1.0323795236446407,
+      "r2": -1.3189849542552974,
+      "rounded_accuracy": 0.4305555555555556,
+      "rounded_balanced_accuracy": 0.2069953627631067,
+      "rounded_macro_f1": 0.2093260709562217,
+      "high_fatigue_recall": 0.168141592920354,
+      "high_fatigue_precision": 0.11801242236024845,
+      "high_fatigue_support": 113
+    },
+    "random_forest": {
+      "mae": 0.5352866859216103,
+      "rmse": 0.6699226659363634,
+      "r2": 0.02350840316599989,
+      "rounded_accuracy": 0.5694444444444444,
+      "rounded_balanced_accuracy": 0.20149343369634848,
+      "rounded_macro_f1": 0.17101097935880544,
+      "high_fatigue_recall": 0.0,
+      "high_fatigue_precision": null,
+      "high_fatigue_support": 113
+    },
+    "extra_trees": {
+      "mae": 0.5297655527801858,
+      "rmse": 0.66455025836088,
+      "r2": 0.039107443684389676,
+      "rounded_accuracy": 0.583994708994709,
+      "rounded_balanced_accuracy": 0.20953715566944267,
+      "rounded_macro_f1": 0.18217378387347702,
+      "high_fatigue_recall": 0.0,
+      "high_fatigue_precision": null,
+      "high_fatigue_support": 113
+    },
+    "gradient_boosting": {
+      "mae": 0.5280026158220082,
+      "rmse": 0.674647326921197,
+      "r2": 0.0096863285565979,
+      "rounded_accuracy": 0.5727513227513228,
+      "rounded_balanced_accuracy": 0.19905909673286354,
+      "rounded_macro_f1": 0.16181107526035518,
+      "high_fatigue_recall": 0.0,
+      "high_fatigue_precision": null,
+      "high_fatigue_support": 113
+    },
+    "hist_gradient_boosting": {
+      "mae": 0.5686016122511756,
+      "rmse": 0.7167942941866373,
+      "r2": -0.11791361625634122,
+      "rounded_accuracy": 0.5112433862433863,
+      "rounded_balanced_accuracy": 0.20087283792440744,
+      "rounded_macro_f1": 0.18845656498868096,
+      "high_fatigue_recall": 0.0,
+      "high_fatigue_precision": 0.0,
+      "high_fatigue_support": 113
+    },
+    "ridge_personal": {
+      "mae": 0.5015361320563149,
+      "rmse": 0.6505148926332542,
+      "r2": 0.07926711684780474,
+      "rounded_accuracy": 0.6078042328042328,
+      "rounded_balanced_accuracy": 0.2297517924900212,
+      "rounded_macro_f1": 0.21315329187539883,
+      "high_fatigue_recall": 0.008849557522123894,
+      "high_fatigue_precision": 0.5,
+      "high_fatigue_support": 113
+    },
+    "gbm_abs_personal": {
+      "mae": 0.4466771233505054,
+      "rmse": 0.6917490365433063,
+      "r2": -0.04115716595504626,
+      "rounded_accuracy": 0.6044973544973545,
+      "rounded_balanced_accuracy": 0.2224875880845612,
+      "rounded_macro_f1": 0.2004075562518448,
+      "high_fatigue_recall": 0.0,
+      "high_fatigue_precision": null,
+      "high_fatigue_support": 113
+    },
+    "baseline_train_median": {
+      "mae": 0.4546957671957672,
+      "rmse": 0.7378871954624997,
+      "r2": -0.18467470326718383,
+      "rounded_accuracy": 0.58994708994709,
+      "rounded_balanced_accuracy": 0.2,
+      "rounded_macro_f1": 0.14841930116472546,
+      "high_fatigue_recall": 0.0,
+      "high_fatigue_precision": null,
+      "high_fatigue_support": 113
+    },
+    "baseline_previous_fatigue": {
+      "mae": 0.5297619047619048,
+      "rmse": 0.8504200642707612,
+      "r2": -0.5735703468237661,
+      "rounded_accuracy": 0.5568783068783069,
+      "rounded_balanced_accuracy": 0.29845174975403443,
+      "rounded_macro_f1": 0.2987140281266084,
+      "high_fatigue_recall": 0.23893805309734514,
+      "high_fatigue_precision": 0.24107142857142858,
+      "high_fatigue_support": 113
+    },
+    "baseline_personal_median": {
+      "mae": 0.42612939614322826,
+      "rmse": 0.6959803929424366,
+      "r2": -0.05393342097172038,
+      "rounded_accuracy": 0.6177248677248677,
+      "rounded_balanced_accuracy": 0.232082799487508,
+      "rounded_macro_f1": 0.2138518160526414,
+      "high_fatigue_recall": 0.0,
+      "high_fatigue_precision": 0.0,
+      "high_fatigue_support": 113
+    }
+  },
+  "development_participants": 14,
+  "test_participants": 2,
+  "test_evaluated": false,
+  "comparability_note": "Legacy and grouped-split metrics are not directly comparable: evaluated participants and protocols differ; a difference is not necessarily a model effect."
+}
