@@ -1,0 +1,7 @@
+model,roc_auc,average_precision,tp_at10,recall_at10,within_person_auc
+A_plus_wellness,0.7319,0.1793,28,0.2478,0.5696
+A_original,0.7360,0.1678,25,0.2212,0.5654
+A_plus_movement,0.7205,0.1648,24,0.2124,0.5330
+A_plus_cardio,0.7146,0.1557,24,0.2124,0.5195
+A_plus_sleep,0.7274,0.1538,21,0.1858,0.5414
+A_plus_all_sensors,0.6964,0.1408,22,0.1947,0.4957
