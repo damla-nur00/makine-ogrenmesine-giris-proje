@@ -1,0 +1,7 @@
+validation,model,roc_auc,average_precision,recall_at10,within_person_auc
+group7,logistic_balanced_C1,0.7231,0.1505,0.2035,0.5628
+group7,logistic_balanced_C001,0.7356,0.1698,0.2389,0.5584
+group7,catboost_A,0.7344,0.1607,0.2655,0.5546
+lopo,logistic_balanced_C1,0.7046,0.1402,0.2124,0.5521
+lopo,logistic_balanced_C001,0.7360,0.1678,0.2212,0.5654
+lopo,catboost_A,0.7393,0.1687,0.2212,0.5591
